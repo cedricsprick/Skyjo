@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Skyjo</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Skyjo">
+<meta name="theme-color" content="#101317">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADgElEQVR42u3dsW0UYRCG4d8rCrDkwA0QEBIiAkqAgAzX4ohaICOAEggQISEBxdDA7r9z3plhDz1vfBpb9qOzN7nv5vbufkhrLX4EgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+DQdfTs+InXj99TvpUfH98EX/nu0/vjX+7rw5f4i39/fn78K7748Cf4yl9vX6X8SF9++/kv3zmyZMRPpci46E6KjPidLBnHTy0nkRE8mCUjfi1LRvBaoozjB5fzyNg9mysjcjNXxu7NdBkHzy6nkjE5XiFjfrlCxuRykYwjxz2tCA7BITgEh+AQHIJDcAgOwSHBITgEh+AQHIJDcAgOwSE4JDgEh+AQHIJDcAgOwSE4BIcEh+AQHIJDZ8YR/8zQrOMXfWzoRW1djn9s6KWtXj74maHznnZ8yf0VFsmo8zG/WeFjcrPIx5PPLkW/yKKDuT4i13J97F5L93Hk4FL960w/leUjfifLR/BOoo+Dp25u7+795yVPK4JDcAgOwaHzlbDUlLVnEH+2bN5NGkmTBvEHy/7xq5J3jsSli+Cp5t2kkTd2EbzTP35VgiN9A2X3YPNu0sieQdm91j9+VYKjaB1ncrZ5N2nUDORMbvaPX5XgqNtN2jrevJs0KqeTVi/3j195WpFHWcEhOASH4BAcgkNwSHAIDsEhOASH4BAcgkNwCA7BIcEhOASH4BAcgkNwCA7BITgkOASH4BAcgkNw6P/EUTeqtXW8eVRrVO5qrV7uX0YrfOco8jE52zyqVeRjcrN/Ga3wz0q6j92DzaNa6T52r/UvoxX+z5HoI3iqeVQr0UfwTv8y2lZmvORpRXAIDsEhOHTOEma8ssYu4s+WzaNaI2nvIv5g2b+MVvLOkTiDEjzVPKo18pZQgnf6l9FKcKQP5OwebB7VGtkbObvX+pfRSnAUTSdNzjaPao2a9aTJzf5ltBIcdaNaW8ebR7VG5a7W6uX+ZTRPK/IoKzgEh+AQHIJDcAgOCQ7BITgEh+AQHIJDcAgOwSE4JDgEh+AQHIJDcAgOwSE4BIcEh+AQHIJDcOiqcdTtJm0db95NGpXTSauX+8evCt85inxMzjbvJhX5mNzsH78q/LOS7mP3YPNuUrqP3Wv941eF/3Mk+gieat5NSvQRvNM/frWVpSZ5WhEcgkNwCA7BITgEh+AQHBIcgkNwCA7BITh0Jf0FkkVGYjUqPs4AAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADgElEQVR42u3dsW0UYRCG4d8rCrDkwA0QEBIiAkqAgAzX4ohaICOAEggQISEBxdDA7r9z3plhDz1vfBpb9qOzN7nv5vbufkhrLX4EgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+DQdfTs+InXj99TvpUfH98EX/nu0/vjX+7rw5f4i39/fn78K7748Cf4yl9vX6X8SF9++/kv3zmyZMRPpci46E6KjPidLBnHTy0nkRE8mCUjfi1LRvBaoozjB5fzyNg9mysjcjNXxu7NdBkHzy6nkjE5XiFjfrlCxuRykYwjxz2tCA7BITgEh+AQHIJDcAgOwSHBITgEh+AQHIJDcAgOwSE4JDgEh+AQHIJDcAgOwSE4BIcEh+AQHIJDZ8YR/8zQrOMXfWzoRW1djn9s6KWtXj74maHznnZ8yf0VFsmo8zG/WeFjcrPIx5PPLkW/yKKDuT4i13J97F5L93Hk4FL960w/leUjfifLR/BOoo+Dp25u7+795yVPK4JDcAgOwaHzlbDUlLVnEH+2bN5NGkmTBvEHy/7xq5J3jsSli+Cp5t2kkTd2EbzTP35VgiN9A2X3YPNu0sieQdm91j9+VYKjaB1ncrZ5N2nUDORMbvaPX5XgqNtN2jrevJs0KqeTVi/3j195WpFHWcEhOASH4BAcgkNwSHAIDsEhOASH4BAcgkNwCA7BIcEhOASH4BAcgkNwCA7BITgkOASH4BAcgkNw6P/EUTeqtXW8eVRrVO5qrV7uX0YrfOco8jE52zyqVeRjcrN/Ga3wz0q6j92DzaNa6T52r/UvoxX+z5HoI3iqeVQr0UfwTv8y2lZmvORpRXAIDsEhOHTOEma8ssYu4s+WzaNaI2nvIv5g2b+MVvLOkTiDEjzVPKo18pZQgnf6l9FKcKQP5OwebB7VGtkbObvX+pfRSnAUTSdNzjaPao2a9aTJzf5ltBIcdaNaW8ebR7VG5a7W6uX+ZTRPK/IoKzgEh+AQHIJDcAgOCQ7BITgEh+AQHIJDcAgOwSE4JDgEh+AQHIJDcAgOwSE4BIcEh+AQHIJDcOiqcdTtJm0db95NGpXTSauX+8evCt85inxMzjbvJhX5mNzsH78q/LOS7mP3YPNuUrqP3Wv941eF/3Mk+gieat5NSvQRvNM/frWVpSZ5WhEcgkNwCA7BITgEh+AQHBIcgkNwCA7BITh0Jf0FkkVGYjUqPs4AAAAASUVORK5CYII=">
+<style>
+:root{
+  --bg:#101317; --surface:#1A1E24; --surface-2:#222731; --line:#2C323B;
+  --fg:#EDEFF2; --fg-2:#98A2AE; --fg-3:#6B7480;
+  --p0:#4A90D9; --p1:#5FB86A; --p2:#E8B93B; --p3:#E0614F;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg)}
+body{
+  font-family:ui-rounded,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;line-height:1.45;
+  padding:max(14px,env(safe-area-inset-top)) 14px max(20px,env(safe-area-inset-bottom));
+  max-width:520px;margin:0 auto;
+  -webkit-user-select:none;user-select:none;
+  overscroll-behavior:none;
+}
+input,button{font-family:inherit;font-size:16px;color:inherit}
+button{cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--p0);outline-offset:2px}
+
+header{display:flex;align-items:baseline;justify-content:space-between;margin:4px 0 16px}
+.wordmark{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.wordmark span{display:inline-block}
+.rounds{font-size:14px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.tile{background:var(--surface);border-radius:16px;padding:12px 14px;position:relative;overflow:hidden;transition:transform .18s ease}
+.tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tc)}
+.tile.lead{background:var(--surface-2)}
+.tile.bump{transform:scale(1.04)}
+.tile input{
+  width:100%;background:none;border:none;padding:0;font-size:14px;font-weight:600;
+  color:var(--tc);letter-spacing:-.01em;text-overflow:ellipsis;
+}
+.tile .sum{font-size:40px;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:2px}
+.tile .sum.danger{color:var(--p3)}
+.tile .crown{position:absolute;right:12px;top:12px;font-size:13px;color:var(--fg-3)}
+
+.entry{background:var(--surface);border-radius:16px;padding:14px}
+.entry h2{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--fg-2)}
+.row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.row .who{flex:1;min-width:0;font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tc)}
+.row input{
+  width:82px;text-align:right;background:var(--bg);border:1px solid var(--line);
+  border-radius:10px;padding:9px 11px;font-weight:600;font-variant-numeric:tabular-nums;
+  -webkit-user-select:text;user-select:text;
+}
+.row input:focus{border-color:var(--tc);outline:none}
+.dbl{
+  width:44px;height:38px;border-radius:10px;border:1px solid var(--line);
+  font-size:14px;font-weight:600;color:var(--fg-3);flex:none;
+}
+.dbl[aria-pressed="true"]{background:var(--p3);border-color:var(--p3);color:#fff}
+.err{margin:2px 0 10px;font-size:14px;color:var(--p3);display:none}
+.save{
+  width:100%;margin-top:6px;padding:15px;border-radius:12px;
+  background:var(--fg);color:var(--bg);font-size:17px;font-weight:700;
+}
+.save:active{transform:scale(.985)}
+
+.tools{display:flex;gap:10px;margin-top:12px}
+.tools button{flex:1;padding:12px;border-radius:12px;border:1px solid var(--line);font-size:15px;color:var(--fg-2)}
+
+details{margin-top:18px}
+summary{list-style:none;font-size:14px;color:var(--fg-2);padding:8px 0}
+summary::-webkit-details-marker{display:none}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;table-layout:fixed}
+th{font-weight:600;font-size:12px;color:var(--fg-3);text-align:right;padding:6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+th:first-child{text-align:left;width:30px}
+td{text-align:right;padding:8px 0;border-top:1px solid var(--line)}
+td:first-child{text-align:left;color:var(--fg-3)}
+
+.hint{margin:16px 2px 0;font-size:13px;line-height:1.5;color:var(--fg-3)}
+
+#finale{
+  position:fixed;inset:0;display:none;z-index:10;
+  background:rgba(10,12,15,.9);
+  align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;
+}
+#finale.on{display:flex}
+#fw{position:absolute;inset:0;width:100%;height:100%}
+.finale-inner{position:relative;z-index:1}
+.finale-inner .who{font-size:15px;color:var(--fg-2);margin-bottom:6px}
+.finale-inner .name{font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.finale-inner .pts{font-size:16px;color:var(--fg-2);margin-top:10px;font-variant-numeric:tabular-nums}
+.finale-inner button{margin-top:26px;padding:13px 26px;border-radius:12px;background:var(--fg);color:var(--bg);font-weight:700}
+.finale-inner .again{background:none;border:1px solid var(--line);color:var(--fg-2);font-weight:500;margin-left:8px}
+@media (prefers-reduced-motion:reduce){.tile{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark" id="wordmark"></div>
+  <div class="rounds" id="roundcount">Runde 1</div>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<div class="entry">
+  <h2 id="entryhead">Punkte dieser Runde</h2>
+  <div id="rows"></div>
+  <p class="err" id="err"></p>
+  <button class="save" id="save">Runde eintragen</button>
+</div>
+
+<div class="tools">
+  <button id="undo">Letzte Runde zurück</button>
+  <button id="reset">Neues Spiel</button>
+</div>
+
+<details id="histwrap">
+  <summary id="histsummary">Rundenverlauf</summary>
+  <div id="hist"></div>
+</details>
+
+<p class="hint">Wer die Runde beendet, aber nicht allein den niedrigsten Rundenwert hat, bekommt seine Punkte verdoppelt. Dafür ist der ×2-Schalter da. Bei 100 Punkten ist Schluss — wer am wenigsten hat, gewinnt.</p>
+
+<div id="finale" role="dialog" aria-modal="true" aria-labelledby="winnername">
+  <canvas id="fw"></canvas>
+  <div class="finale-inner">
+    <div class="who">Gewonnen hat</div>
+    <div class="name" id="winnername"></div>
+    <div class="pts" id="winnerpts"></div>
+    <div>
+      <button id="newgame">Neues Spiel</button>
+      <button class="again again" id="closefinale">Stand ansehen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var LIMIT = 100;
+  var COLORS = ["var(--p0)","var(--p1)","var(--p2)","var(--p3)"];
+  var HEX = ["#4A90D9","#5FB86A","#E8B93B","#E0614F"];
+  var KEY = "skyjo.state.v1";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var state = load() || { names:["Spieler 1","Spieler 2","Spieler 3","Spieler 4"], rounds:[], done:false };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(!raw) return null;
+      var s = JSON.parse(raw);
+      if(!s || !Array.isArray(s.names) || !Array.isArray(s.rounds)) return null;
+      return s;
+    }catch(e){ return null; }
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+  function totals(){
+    return state.names.map(function(_,i){
+      return state.rounds.reduce(function(a,r){ return a + (r[i]||0); }, 0);
+    });
+  }
+
+  var wordmark = document.getElementById("wordmark");
+  "Skyjo".split("").forEach(function(ch,i){
+    var s = document.createElement("span");
+    s.textContent = ch;
+    if(i > 0) s.style.color = HEX[(i-1) % 4];
+    wordmark.appendChild(s);
+  });
+
+  var tilesEl = document.getElementById("tiles");
+  var rowsEl = document.getElementById("rows");
+  var errEl = document.getElementById("err");
+
+  state.names.forEach(function(n,i){
+    var t = document.createElement("div");
+    t.className = "tile";
+    t.style.setProperty("--tc", COLORS[i]);
+    t.innerHTML = '<input type="text" maxlength="14" aria-label="Name Spieler ' + (i+1) + '">' +
+                  '<div class="sum">0</div><div class="crown"></div>';
+    var inp = t.querySelector("input");
+    inp.value = n;
+    inp.addEventListener("input", function(){
+      state.names[i] = inp.value.trim() || ("Spieler " + (i+1));
+      save(); paintRows(); paintHistory();
+    });
+    inp.addEventListener("blur", function(){ inp.value = state.names[i]; });
+    tilesEl.appendChild(t);
+
+    var r = document.createElement("div");
+    r.className = "row";
+    r.style.setProperty("--tc", COLORS[i]);
+    r.innerHTML = '<span class="who"></span>' +
+      '<input type="number" inputmode="numbers-and-punctuation" step="1" placeholder="0" data-i="' + i + '">' +
+      '<button class="dbl" aria-pressed="false" data-i="' + i + '" aria-label="Punkte verdoppeln">&times;2</button>';
+    r.querySelector("input").addEventListener("input", clearErr);
+    r.querySelector(".dbl").addEventListener("click", function(){
+      var on = this.getAttribute("aria-pressed") === "true";
+      this.setAttribute("aria-pressed", on ? "false" : "true");
+    });
+    rowsEl.appendChild(r);
+  });
+
+  function clearErr(){ errEl.style.display = "none"; }
+
+  function paintRows(){
+    rowsEl.querySelectorAll(".who").forEach(function(el,i){ el.textContent = state.names[i]; });
+  }
+
+  function paint(){
+    var t = totals();
+    var min = Math.min.apply(null, t);
+    var max = Math.max.apply(null, t);
+    document.getElementById("roundcount").textContent = state.rounds.length
+      ? "Runde " + (state.rounds.length + 1) + " · noch " + Math.max(0, LIMIT - max) + " bis 100"
+      : "Runde 1";
+    tilesEl.querySelectorAll(".tile").forEach(function(tile,i){
+      tile.querySelector("input").value = state.names[i];
+      var sum = tile.querySelector(".sum");
+      sum.textContent = t[i];
+      sum.classList.toggle("danger", t[i] >= LIMIT);
+      var lead = state.rounds.length > 0 && t[i] === min;
+      tile.classList.toggle("lead", lead);
+      tile.querySelector(".crown").textContent = lead ? "führt" : "";
+    });
+    paintRows();
+    paintHistory();
+  }
+
+  function paintHistory(){
+    var h = document.getElementById("hist");
+    document.getElementById("histsummary").textContent =
+      state.rounds.length ? "Rundenverlauf (" + state.rounds.length + ")" : "Rundenverlauf";
+    if(!state.rounds.length){ h.innerHTML = '<p class="hint" style="margin-top:2px">Noch keine Runde eingetragen.</p>'; return; }
+    var s = "<table><tr><th>#</th>";
+    state.names.forEach(function(n,i){
+      s += '<th style="color:' + HEX[i] + '">' + esc(n) + "</th>";
+    });
+    s += "</tr>";
+    state.rounds.forEach(function(r,ri){
+      s += "<tr><td>" + (ri+1) + "</td>";
+      r.forEach(function(v){ s += "<td>" + v + "</td>"; });
+      s += "</tr>";
+    });
+    h.innerHTML = s + "</table>";
+  }
+
+  function esc(x){
+    return String(x).replace(/[&<>"]/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+    });
+  }
+
+  document.getElementById("save").addEventListener("click", function(){
+    var inputs = rowsEl.querySelectorAll('input[type="number"]');
+    var dbls = rowsEl.querySelectorAll(".dbl");
+    var vals = [], missing = [];
+    inputs.forEach(function(inp,i){
+      var raw = inp.value.trim();
+      var n = Number(raw);
+      if(raw === "" || !isFinite(n)){ missing.push(state.names[i]); vals.push(0); return; }
+      n = Math.round(n);
+      if(dbls[i].getAttribute("aria-pressed") === "true" && n > 0) n = n * 2;
+      vals.push(n);
+    });
+    if(missing.length){
+      errEl.textContent = missing.length === 1
+        ? "Für " + missing[0] + " fehlt noch die Punktzahl."
+        : "Für " + missing.length + " Spieler fehlt noch die Punktzahl.";
+      errEl.style.display = "block";
+      return;
+    }
+    clearErr();
+    state.rounds.push(vals);
+    inputs.forEach(function(inp){ inp.value = ""; inp.blur(); });
+    dbls.forEach(function(b){ b.setAttribute("aria-pressed","false"); });
+    save();
+    paint();
+    bump();
+    checkEnd();
+  });
+
+  function bump(){
+    if(reduce) return;
+    tilesEl.querySelectorAll(".tile").forEach(function(t,i){
+      setTimeout(function(){
+        t.classList.add("bump");
+        setTimeout(function(){ t.classList.remove("bump"); }, 170);
+      }, i * 45);
+    });
+  }
+
+  document.getElementById("undo").addEventListener("click", function(){
+    if(!state.rounds.length) return;
+    state.rounds.pop();
+    state.done = false;
+    save(); paint();
+  });
+
+  document.getElementById("reset").addEventListener("click", function(){
+    if(state.rounds.length && !confirm("Alle Runden löschen und neu anfangen?")) return;
+    newGame();
+  });
+
+  function newGame(){
+    state.rounds = [];
+    state.done = false;
+    save(); paint();
+    hideFinale();
+    rowsEl.querySelectorAll('input[type="number"]').forEach(function(i){ i.value = ""; });
+    rowsEl.querySelectorAll(".dbl").forEach(function(b){ b.setAttribute("aria-pressed","false"); });
+    document.getElementById("histwrap").open = false;
+    window.scrollTo(0,0);
+  }
+
+  function checkEnd(){
+    var t = totals();
+    if(!t.some(function(v){ return v >= LIMIT; })) return;
+    state.done = true; save();
+    var min = Math.min.apply(null, t);
+    var winners = state.names.filter(function(_,i){ return t[i] === min; });
+    var idx = t.indexOf(min);
+    document.getElementById("winnername").textContent = winners.join(" & ");
+    document.getElementById("winnername").style.color = winners.length === 1 ? HEX[idx] : "var(--fg)";
+    document.getElementById("winnerpts").textContent = min + " Punkte nach " + state.rounds.length + " Runden";
+    showFinale();
+  }
+
+  var finale = document.getElementById("finale");
+  var canvas = document.getElementById("fw");
+  var ctx = canvas.getContext("2d");
+  var parts = [], raf = null, burstTimer = null;
+
+  function showFinale(){
+    finale.classList.add("on");
+    if(reduce) return;
+    sizeCanvas();
+    parts = [];
+    var n = 0;
+    burst();
+    burstTimer = setInterval(function(){
+      burst();
+      if(++n > 10) { clearInterval(burstTimer); burstTimer = null; }
+    }, 620);
+    if(!raf) raf = requestAnimationFrame(tick);
+  }
+
+  function hideFinale(){
+    finale.classList.remove("on");
+    if(burstTimer){ clearInterval(burstTimer); burstTimer = null; }
+    if(raf){ cancelAnimationFrame(raf); raf = null; }
+    parts = [];
+  }
+
+  function sizeCanvas(){
+    var d = window.devicePixelRatio || 1;
+    canvas.width = canvas.clientWidth * d;
+    canvas.height = canvas.clientHeight * d;
+    ctx.setTransform(d,0,0,d,0,0);
+  }
+  window.addEventListener("resize", function(){ if(finale.classList.contains("on")) sizeCanvas(); });
+
+  function burst(){
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    var x = w * (0.15 + Math.random() * 0.7);
+    var y = h * (0.12 + Math.random() * 0.35);
+    var hex = HEX[Math.floor(Math.random() * HEX.length)];
+    var count = 46 + Math.floor(Math.random() * 26);
+    var speed = 2.4 + Math.random() * 1.9;
+    for(var i = 0; i < count; i++){
+      var a = (Math.PI * 2 * i) / count + Math.random() * 0.16;
+      var s = speed * (0.55 + Math.random() * 0.7);
+      parts.push({
+        x:x, y:y,
+        vx:Math.cos(a) * s, vy:Math.sin(a) * s,
+        life:1, decay:0.008 + Math.random() * 0.011,
+        c:hex, r:1.4 + Math.random() * 1.8
+      });
+    }
+    if(parts.length > 1400) parts.splice(0, parts.length - 1400);
+  }
+
+  function tick(){
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    ctx.clearRect(0,0,w,h);
+    for(var i = parts.length - 1; i >= 0; i--){
+      var p = parts[i];
+      p.vy += 0.035;
+      p.vx *= 0.988;
+      p.vy *= 0.988;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      if(p.life <= 0 || p.y > h + 30){ parts.splice(i,1); continue; }
+      ctx.globalAlpha = Math.max(0, p.life);
+      ctx.fillStyle = p.c;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(tick);
+  }
+
+  document.getElementById("newgame").addEventListener("click", newGame);
+  document.getElementById("closefinale").addEventListener("click", hideFinale);
+
+  paint();
+  if(state.done) checkEnd();
+})();
+</script>
+</body>
+</html>
