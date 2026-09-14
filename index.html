@@ -16,7 +16,6 @@
 :root{
   --bg:#101317; --surface:#1A1E24; --surface-2:#222731; --line:#2C323B;
   --fg:#EDEFF2; --fg-2:#98A2AE; --fg-3:#6B7480;
-  --p0:#4A90D9; --p1:#5FB86A; --p2:#E8B93B; --p3:#E0614F;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--fg)}
@@ -30,14 +29,31 @@ body{
 }
 input,button{font-family:inherit;font-size:16px;color:inherit}
 button{cursor:pointer;border:none;background:none}
-:focus-visible{outline:2px solid var(--p0);outline-offset:2px}
+:focus-visible{outline:2px solid var(--fg-2);outline-offset:2px}
 
-header{display:flex;align-items:baseline;justify-content:space-between;margin:4px 0 16px}
+header{display:flex;align-items:baseline;justify-content:space-between;margin:4px 0 14px}
 .wordmark{font-size:26px;font-weight:700;letter-spacing:-.02em}
 .wordmark span{display:inline-block}
-.rounds{font-size:14px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.rounds{font-size:14px;color:var(--fg-2);font-variant-numeric:tabular-nums;text-align:right}
+
+.count{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--surface);border-radius:14px;padding:9px 12px 9px 14px;margin-bottom:14px;
+}
+.count .lbl{font-size:14px;color:var(--fg-2)}
+.count .ctrl{display:flex;align-items:center;gap:4px}
+.count .ctrl button{
+  width:38px;height:36px;border-radius:10px;border:1px solid var(--line);
+  font-size:20px;font-weight:600;color:var(--fg);line-height:1;
+}
+.count .ctrl button:disabled{opacity:.3;cursor:default}
+.count .ctrl .num{
+  min-width:34px;text-align:center;font-size:19px;font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
 
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.tiles.odd .tile:last-child{grid-column:1 / -1}
 .tile{background:var(--surface);border-radius:16px;padding:12px 14px;position:relative;overflow:hidden;transition:transform .18s ease}
 .tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tc)}
 .tile.lead{background:var(--surface-2)}
@@ -46,8 +62,8 @@ header{display:flex;align-items:baseline;justify-content:space-between;margin:4p
   width:100%;background:none;border:none;padding:0;font-size:14px;font-weight:600;
   color:var(--tc);letter-spacing:-.01em;text-overflow:ellipsis;
 }
-.tile .sum{font-size:40px;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:2px}
-.tile .sum.danger{color:var(--p3)}
+.tile .sum{font-size:38px;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
+.tile .sum.danger{color:#E0614F}
 .tile .crown{position:absolute;right:12px;top:12px;font-size:13px;color:var(--fg-3)}
 
 .entry{background:var(--surface);border-radius:16px;padding:14px}
@@ -60,16 +76,10 @@ header{display:flex;align-items:baseline;justify-content:space-between;margin:4p
   -webkit-user-select:text;user-select:text;
 }
 .row input:focus{border-color:var(--tc);outline:none}
-.dbl{
-  width:44px;height:38px;border-radius:10px;border:1px solid var(--line);
-  font-size:14px;font-weight:600;color:var(--fg-3);flex:none;
-}
-.dbl[aria-pressed="true"]{background:var(--p3);border-color:var(--p3);color:#fff}
-.err{margin:2px 0 10px;font-size:14px;color:var(--p3);display:none}
-.save{
-  width:100%;margin-top:6px;padding:15px;border-radius:12px;
-  background:var(--fg);color:var(--bg);font-size:17px;font-weight:700;
-}
+.dbl{width:44px;height:38px;border-radius:10px;border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--fg-3);flex:none}
+.dbl[aria-pressed="true"]{background:#E0614F;border-color:#E0614F;color:#fff}
+.err{margin:2px 0 10px;font-size:14px;color:#E0614F;display:none}
+.save{width:100%;margin-top:6px;padding:15px;border-radius:12px;background:var(--fg);color:var(--bg);font-size:17px;font-weight:700}
 .save:active{transform:scale(.985)}
 
 .tools{display:flex;gap:10px;margin-top:12px}
@@ -78,24 +88,21 @@ header{display:flex;align-items:baseline;justify-content:space-between;margin:4p
 details{margin-top:18px}
 summary{list-style:none;font-size:14px;color:var(--fg-2);padding:8px 0}
 summary::-webkit-details-marker{display:none}
-table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;table-layout:fixed}
-th{font-weight:600;font-size:12px;color:var(--fg-3);text-align:right;padding:6px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-th:first-child{text-align:left;width:30px}
-td{text-align:right;padding:8px 0;border-top:1px solid var(--line)}
-td:first-child{text-align:left;color:var(--fg-3)}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;width:100%}
+th{font-weight:600;font-size:12px;color:var(--fg-3);text-align:right;padding:6px 8px 6px 0;white-space:nowrap}
+th:first-child{text-align:left;width:28px;padding-left:0}
+td{text-align:right;padding:8px 8px 8px 0;border-top:1px solid var(--line);white-space:nowrap}
+td:first-child{text-align:left;color:var(--fg-3);padding-left:0}
 
 .hint{margin:16px 2px 0;font-size:13px;line-height:1.5;color:var(--fg-3)}
 
-#finale{
-  position:fixed;inset:0;display:none;z-index:10;
-  background:rgba(10,12,15,.9);
-  align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;
-}
+#finale{position:fixed;inset:0;display:none;z-index:10;background:rgba(10,12,15,.9);align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px}
 #finale.on{display:flex}
 #fw{position:absolute;inset:0;width:100%;height:100%}
 .finale-inner{position:relative;z-index:1}
 .finale-inner .who{font-size:15px;color:var(--fg-2);margin-bottom:6px}
-.finale-inner .name{font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.finale-inner .name{font-size:36px;font-weight:700;letter-spacing:-.03em;line-height:1.12}
 .finale-inner .pts{font-size:16px;color:var(--fg-2);margin-top:10px;font-variant-numeric:tabular-nums}
 .finale-inner button{margin-top:26px;padding:13px 26px;border-radius:12px;background:var(--fg);color:var(--bg);font-weight:700}
 .finale-inner .again{background:none;border:1px solid var(--line);color:var(--fg-2);font-weight:500;margin-left:8px}
@@ -109,10 +116,19 @@ td:first-child{text-align:left;color:var(--fg-3)}
   <div class="rounds" id="roundcount">Runde 1</div>
 </header>
 
+<div class="count">
+  <span class="lbl">Anzahl Spieler</span>
+  <div class="ctrl">
+    <button id="minus" aria-label="Ein Spieler weniger">&minus;</button>
+    <span class="num" id="countnum" aria-live="polite">4</span>
+    <button id="plus" aria-label="Ein Spieler mehr">+</button>
+  </div>
+</div>
+
 <div class="tiles" id="tiles"></div>
 
 <div class="entry">
-  <h2 id="entryhead">Punkte dieser Runde</h2>
+  <h2>Punkte dieser Runde</h2>
   <div id="rows"></div>
   <p class="err" id="err"></p>
   <button class="save" id="save">Runde eintragen</button>
@@ -125,10 +141,10 @@ td:first-child{text-align:left;color:var(--fg-3)}
 
 <details id="histwrap">
   <summary id="histsummary">Rundenverlauf</summary>
-  <div id="hist"></div>
+  <div class="scroller"><div id="hist"></div></div>
 </details>
 
-<p class="hint">Wer die Runde beendet, aber nicht allein den niedrigsten Rundenwert hat, bekommt seine Punkte verdoppelt. Dafür ist der ×2-Schalter da. Bei 100 Punkten ist Schluss — wer am wenigsten hat, gewinnt.</p>
+<p class="hint">Wer die Runde beendet, aber nicht allein den niedrigsten Rundenwert hat, bekommt seine Punkte verdoppelt — dafür ist der ×2-Schalter da. Bei 100 Punkten ist Schluss, wer am wenigsten hat, gewinnt.</p>
 
 <div id="finale" role="dialog" aria-modal="true" aria-labelledby="winnername">
   <canvas id="fw"></canvas>
@@ -138,36 +154,46 @@ td:first-child{text-align:left;color:var(--fg-3)}
     <div class="pts" id="winnerpts"></div>
     <div>
       <button id="newgame">Neues Spiel</button>
-      <button class="again again" id="closefinale">Stand ansehen</button>
+      <button class="again" id="closefinale">Stand ansehen</button>
     </div>
   </div>
 </div>
 
 <script>
 (function(){
-  var LIMIT = 100;
-  var COLORS = ["var(--p0)","var(--p1)","var(--p2)","var(--p3)"];
-  var HEX = ["#4A90D9","#5FB86A","#E8B93B","#E0614F"];
-  var KEY = "skyjo.state.v1";
+  var LIMIT = 100, MINP = 2, MAXP = 8, KEY = "skyjo.state.v1";
+  var HEX = ["#4A90D9","#5FB86A","#E8B93B","#E0614F","#A97FD9","#43C4C0","#EE8F4B","#E06BA0"];
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var state = load() || { names:["Spieler 1","Spieler 2","Spieler 3","Spieler 4"], rounds:[], done:false };
+  var state = load();
+
+  function defaults(){
+    var names = [];
+    for(var i = 0; i < MAXP; i++) names.push("Spieler " + (i+1));
+    return { names:names, count:4, rounds:[], done:false };
+  }
 
   function load(){
-    try{
-      var raw = localStorage.getItem(KEY);
-      if(!raw) return null;
-      var s = JSON.parse(raw);
-      if(!s || !Array.isArray(s.names) || !Array.isArray(s.rounds)) return null;
-      return s;
-    }catch(e){ return null; }
+    var s;
+    try{ s = JSON.parse(localStorage.getItem(KEY)); }catch(e){}
+    if(!s || !Array.isArray(s.names) || !Array.isArray(s.rounds)) return defaults();
+    var count = s.count || s.names.length || 4;
+    count = Math.min(MAXP, Math.max(MINP, count));
+    var names = s.names.slice(0, MAXP);
+    for(var i = names.length; i < MAXP; i++) names.push("Spieler " + (i+1));
+    var rounds = s.rounds.filter(function(r){ return Array.isArray(r) && r.length === count; });
+    return { names:names, count:count, rounds:rounds, done:!!s.done };
   }
+
   function save(){
     try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
   }
+
+  function active(){ return state.names.slice(0, state.count); }
+
   function totals(){
-    return state.names.map(function(_,i){
-      return state.rounds.reduce(function(a,r){ return a + (r[i]||0); }, 0);
+    return active().map(function(_,i){
+      return state.rounds.reduce(function(a,r){ return a + (r[i] || 0); }, 0);
     });
   }
 
@@ -175,55 +201,66 @@ td:first-child{text-align:left;color:var(--fg-3)}
   "Skyjo".split("").forEach(function(ch,i){
     var s = document.createElement("span");
     s.textContent = ch;
-    if(i > 0) s.style.color = HEX[(i-1) % 4];
+    if(i > 0) s.style.color = HEX[i-1];
     wordmark.appendChild(s);
   });
 
   var tilesEl = document.getElementById("tiles");
   var rowsEl = document.getElementById("rows");
   var errEl = document.getElementById("err");
+  var countNum = document.getElementById("countnum");
+  var minusBtn = document.getElementById("minus");
+  var plusBtn = document.getElementById("plus");
 
-  state.names.forEach(function(n,i){
-    var t = document.createElement("div");
-    t.className = "tile";
-    t.style.setProperty("--tc", COLORS[i]);
-    t.innerHTML = '<input type="text" maxlength="14" aria-label="Name Spieler ' + (i+1) + '">' +
-                  '<div class="sum">0</div><div class="crown"></div>';
-    var inp = t.querySelector("input");
-    inp.value = n;
-    inp.addEventListener("input", function(){
-      state.names[i] = inp.value.trim() || ("Spieler " + (i+1));
-      save(); paintRows(); paintHistory();
-    });
-    inp.addEventListener("blur", function(){ inp.value = state.names[i]; });
-    tilesEl.appendChild(t);
+  function build(){
+    tilesEl.innerHTML = "";
+    rowsEl.innerHTML = "";
+    tilesEl.classList.toggle("odd", state.count % 2 === 1);
 
-    var r = document.createElement("div");
-    r.className = "row";
-    r.style.setProperty("--tc", COLORS[i]);
-    r.innerHTML = '<span class="who"></span>' +
-      '<input type="number" inputmode="numbers-and-punctuation" step="1" placeholder="0" data-i="' + i + '">' +
-      '<button class="dbl" aria-pressed="false" data-i="' + i + '" aria-label="Punkte verdoppeln">&times;2</button>';
-    r.querySelector("input").addEventListener("input", clearErr);
-    r.querySelector(".dbl").addEventListener("click", function(){
-      var on = this.getAttribute("aria-pressed") === "true";
-      this.setAttribute("aria-pressed", on ? "false" : "true");
+    active().forEach(function(n,i){
+      var t = document.createElement("div");
+      t.className = "tile";
+      t.style.setProperty("--tc", HEX[i]);
+      t.innerHTML = '<input type="text" maxlength="14" aria-label="Name Spieler ' + (i+1) + '">' +
+                    '<div class="sum">0</div><div class="crown"></div>';
+      var inp = t.querySelector("input");
+      inp.value = n;
+      inp.addEventListener("input", function(){
+        state.names[i] = inp.value.trim() || ("Spieler " + (i+1));
+        save(); paintRows(); paintHistory();
+      });
+      inp.addEventListener("blur", function(){ inp.value = state.names[i]; });
+      tilesEl.appendChild(t);
+
+      var r = document.createElement("div");
+      r.className = "row";
+      r.style.setProperty("--tc", HEX[i]);
+      r.innerHTML = '<span class="who"></span>' +
+        '<input type="number" inputmode="numbers-and-punctuation" step="1" placeholder="0">' +
+        '<button class="dbl" aria-pressed="false" aria-label="Punkte verdoppeln">&times;2</button>';
+      r.querySelector("input").addEventListener("input", clearErr);
+      r.querySelector(".dbl").addEventListener("click", function(){
+        this.setAttribute("aria-pressed", this.getAttribute("aria-pressed") === "true" ? "false" : "true");
+      });
+      rowsEl.appendChild(r);
     });
-    rowsEl.appendChild(r);
-  });
+
+    countNum.textContent = state.count;
+    minusBtn.disabled = state.count <= MINP;
+    plusBtn.disabled = state.count >= MAXP;
+  }
 
   function clearErr(){ errEl.style.display = "none"; }
 
   function paintRows(){
-    rowsEl.querySelectorAll(".who").forEach(function(el,i){ el.textContent = state.names[i]; });
+    var names = active();
+    rowsEl.querySelectorAll(".who").forEach(function(el,i){ el.textContent = names[i]; });
   }
 
   function paint(){
-    var t = totals();
-    var min = Math.min.apply(null, t);
-    var max = Math.max.apply(null, t);
+    var t = totals(), min = Math.min.apply(null, t), max = Math.max.apply(null, t);
     document.getElementById("roundcount").textContent = state.rounds.length
-      ? "Runde " + (state.rounds.length + 1) + " · noch " + Math.max(0, LIMIT - max) + " bis 100"
+      ? "Runde " + (state.rounds.length + 1) + " · noch " + Math.max(0, LIMIT - max)
       : "Runde 1";
     tilesEl.querySelectorAll(".tile").forEach(function(tile,i){
       tile.querySelector("input").value = state.names[i];
@@ -242,9 +279,12 @@ td:first-child{text-align:left;color:var(--fg-3)}
     var h = document.getElementById("hist");
     document.getElementById("histsummary").textContent =
       state.rounds.length ? "Rundenverlauf (" + state.rounds.length + ")" : "Rundenverlauf";
-    if(!state.rounds.length){ h.innerHTML = '<p class="hint" style="margin-top:2px">Noch keine Runde eingetragen.</p>'; return; }
-    var s = "<table><tr><th>#</th>";
-    state.names.forEach(function(n,i){
+    if(!state.rounds.length){
+      h.innerHTML = '<p class="hint" style="margin-top:2px">Noch keine Runde eingetragen.</p>';
+      return;
+    }
+    var s = '<table style="min-width:' + (30 + state.count * 58) + 'px"><tr><th>#</th>';
+    active().forEach(function(n,i){
       s += '<th style="color:' + HEX[i] + '">' + esc(n) + "</th>";
     });
     s += "</tr>";
@@ -262,14 +302,28 @@ td:first-child{text-align:left;color:var(--fg-3)}
     });
   }
 
+  function setCount(n){
+    n = Math.min(MAXP, Math.max(MINP, n));
+    if(n === state.count) return;
+    if(state.rounds.length &&
+       !confirm("Die Spieleranzahl zu ändern startet ein neues Spiel. Fortfahren?")) return;
+    state.count = n;
+    state.rounds = [];
+    state.done = false;
+    clearErr();
+    save(); build(); paint(); hideFinale();
+  }
+
+  minusBtn.addEventListener("click", function(){ setCount(state.count - 1); });
+  plusBtn.addEventListener("click", function(){ setCount(state.count + 1); });
+
   document.getElementById("save").addEventListener("click", function(){
     var inputs = rowsEl.querySelectorAll('input[type="number"]');
     var dbls = rowsEl.querySelectorAll(".dbl");
-    var vals = [], missing = [];
+    var vals = [], missing = [], names = active();
     inputs.forEach(function(inp,i){
-      var raw = inp.value.trim();
-      var n = Number(raw);
-      if(raw === "" || !isFinite(n)){ missing.push(state.names[i]); vals.push(0); return; }
+      var raw = inp.value.trim(), n = Number(raw);
+      if(raw === "" || !isFinite(n)){ missing.push(names[i]); vals.push(0); return; }
       n = Math.round(n);
       if(dbls[i].getAttribute("aria-pressed") === "true" && n > 0) n = n * 2;
       vals.push(n);
@@ -285,10 +339,7 @@ td:first-child{text-align:left;color:var(--fg-3)}
     state.rounds.push(vals);
     inputs.forEach(function(inp){ inp.value = ""; inp.blur(); });
     dbls.forEach(function(b){ b.setAttribute("aria-pressed","false"); });
-    save();
-    paint();
-    bump();
-    checkEnd();
+    save(); paint(); bump(); checkEnd();
   });
 
   function bump(){
@@ -297,7 +348,7 @@ td:first-child{text-align:left;color:var(--fg-3)}
       setTimeout(function(){
         t.classList.add("bump");
         setTimeout(function(){ t.classList.remove("bump"); }, 170);
-      }, i * 45);
+      }, i * 40);
     });
   }
 
@@ -316,8 +367,7 @@ td:first-child{text-align:left;color:var(--fg-3)}
   function newGame(){
     state.rounds = [];
     state.done = false;
-    save(); paint();
-    hideFinale();
+    save(); paint(); hideFinale();
     rowsEl.querySelectorAll('input[type="number"]').forEach(function(i){ i.value = ""; });
     rowsEl.querySelectorAll(".dbl").forEach(function(b){ b.setAttribute("aria-pressed","false"); });
     document.getElementById("histwrap").open = false;
@@ -329,11 +379,13 @@ td:first-child{text-align:left;color:var(--fg-3)}
     if(!t.some(function(v){ return v >= LIMIT; })) return;
     state.done = true; save();
     var min = Math.min.apply(null, t);
-    var winners = state.names.filter(function(_,i){ return t[i] === min; });
-    var idx = t.indexOf(min);
+    var names = active();
+    var winners = names.filter(function(_,i){ return t[i] === min; });
     document.getElementById("winnername").textContent = winners.join(" & ");
-    document.getElementById("winnername").style.color = winners.length === 1 ? HEX[idx] : "var(--fg)";
-    document.getElementById("winnerpts").textContent = min + " Punkte nach " + state.rounds.length + " Runden";
+    document.getElementById("winnername").style.color =
+      winners.length === 1 ? HEX[t.indexOf(min)] : "var(--fg)";
+    document.getElementById("winnerpts").textContent =
+      min + " Punkte nach " + state.rounds.length + " Runden";
     showFinale();
   }
 
@@ -351,7 +403,7 @@ td:first-child{text-align:left;color:var(--fg-3)}
     burst();
     burstTimer = setInterval(function(){
       burst();
-      if(++n > 10) { clearInterval(burstTimer); burstTimer = null; }
+      if(++n > 10){ clearInterval(burstTimer); burstTimer = null; }
     }, 620);
     if(!raf) raf = requestAnimationFrame(tick);
   }
@@ -382,8 +434,7 @@ td:first-child{text-align:left;color:var(--fg-3)}
       var a = (Math.PI * 2 * i) / count + Math.random() * 0.16;
       var s = speed * (0.55 + Math.random() * 0.7);
       parts.push({
-        x:x, y:y,
-        vx:Math.cos(a) * s, vy:Math.sin(a) * s,
+        x:x, y:y, vx:Math.cos(a) * s, vy:Math.sin(a) * s,
         life:1, decay:0.008 + Math.random() * 0.011,
         c:hex, r:1.4 + Math.random() * 1.8
       });
@@ -396,11 +447,8 @@ td:first-child{text-align:left;color:var(--fg-3)}
     ctx.clearRect(0,0,w,h);
     for(var i = parts.length - 1; i >= 0; i--){
       var p = parts[i];
-      p.vy += 0.035;
-      p.vx *= 0.988;
-      p.vy *= 0.988;
-      p.x += p.vx;
-      p.y += p.vy;
+      p.vy += 0.035; p.vx *= 0.988; p.vy *= 0.988;
+      p.x += p.vx; p.y += p.vy;
       p.life -= p.decay;
       if(p.life <= 0 || p.y > h + 30){ parts.splice(i,1); continue; }
       ctx.globalAlpha = Math.max(0, p.life);
@@ -416,6 +464,7 @@ td:first-child{text-align:left;color:var(--fg-3)}
   document.getElementById("newgame").addEventListener("click", newGame);
   document.getElementById("closefinale").addEventListener("click", hideFinale);
 
+  build();
   paint();
   if(state.done) checkEnd();
 })();

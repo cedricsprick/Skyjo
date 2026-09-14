@@ -1,4 +1,4 @@
-var CACHE = "skyjo-v1";
+var CACHE = "skyjo-v2";
 var ASSETS = [
   "./",
   "./index.html",
